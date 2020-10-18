@@ -7,8 +7,8 @@ class DataController extends Controller
 {
     public function index()
     {
-        $data = DB::select('select * from wp_data', [1]);
-        
+        $data = DB::table('wp_data')->paginate(10);
+
         return view('data.show', ['data' => $data]);
     }
 }
