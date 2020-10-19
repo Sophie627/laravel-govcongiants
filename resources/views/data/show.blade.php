@@ -15,19 +15,21 @@
                         <div class="md:col-span-1 sm:col-span-3 pr-8">
                             <div class="py-3">
                                 <p class="font-black">Keywords</p>
-                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords">
-                                <p>Clear All</p>
+                                @if(isset($search))
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords" value="{{ $search }}">
+                                @else
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords" value="">
+                                @endif   
                             </div>
-                            <div>
+                            <div class="py-3">
                                 <p class="font-black">NAICS</p>
-                                {{-- <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="naics"> --}}
                                 <div class="dropdown-mul-1 w-full">
                                     <select style="display:none" name="" id="" multiple placeholder="Select"> </select>
                                 </div>
-                                <p>Clear All</p>
                             </div>
+                            <a href="/data">Clear All</a>
                         </div>
-                        <div class="md:col-span-2 sm:col-span-3">
+                        <div class="md:col-span-2 sm:col-span-3" id="result">
                             {{ $data->links() }}
         
                             <div class="divide-y divide-gray-400">
@@ -55,7 +57,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            
+
                             {{ $data->links() }}
                         </div>
                     </div>
@@ -68,6 +70,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 <script src="{{ url('/js/jquery.dropdown.js') }}"></script>
 <script type="text/javascript">
+    function search() {
+        keywords = $('#keywords').val();
+            // $('.result').hide();
+
+            // jQuery.expr[':'].contains = function(a, i, m) {
+            //     return jQuery(a).html().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+            // };
+
+            // $('.result:contains("' + keywords + '")').show();
+        console.log(keywords);
+        $.ajax({
+            type: 'GET',
+            data: {
+                search: keywords,
+            },
+            url: '/data',
+            success: function(data) {
+                $('#result').html(data.toString());
+            }
+        });
+
+    }
+    // $(document).ajaxComplete(function() {
+    //     $('.pagination li a').click(function(e) {
+    //         e.preventDefault();
+    //         var url = $(this).attr('href');
+    //         $.ajax({
+    //             url: url,
+    //             success: function(data) {
+    //                 $('#result').html(data);
+    //             }
+    //         });
+    //     });
+    // });
+    // $("#keywords_tagsinput").change(search());
     $(function() {
         var json1 = {
             data : [{
@@ -116,25 +153,11 @@
             'defaultText': '',
             'onAddTag': function(tag) {
                 console.log("Added a tag: " + tag)
+                search();
             },
             'onRemoveTag': function(tag) {
                 console.log("Removed a tag: " + tag);
-            },
-            'removeWithBackspace': true,
-            'minChars': 2,
-            'maxChars': 30,
-            'placeholderColor': '#777'
-        });
-        $('#naics').tagsInput({
-            'height': '120px',
-            'width': '24vw',
-            'interactive': true,
-            'defaultText': '',
-            'onAddTag': function(tag) {
-                console.log("Added a tag: " + tag)
-            },
-            'onRemoveTag': function(tag) {
-                console.log("Removed a tag: " + tag);
+                search();
             },
             'removeWithBackspace': true,
             'minChars': 2,

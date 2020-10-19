@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/data', [DataController::class, 'index'])->name('data');
+    // Route::get('/search', [SearchController::class, 'index']);
 });
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/data', function () {
