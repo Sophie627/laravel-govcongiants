@@ -8,15 +8,19 @@ class DataController extends Controller
 {
     public function index()
     {
-        if(!isset($_GET['search']) || !isset($_GET['naics'])) {
+        if(!isset($_GET['search']) || !isset($_GET['naics']) || !isset($_GET['fromDate']) || !isset($_GET['toDate'])) {
             $data = DB::table('wp_data')->paginate(10);
 
             return view('data.show', ['data' => $data]);
         } else {
-            // print_r($_GET['search']);
+
             $terms = explode(',', $_GET['search']);
             $naicsData = explode(',', $_GET['naics']);
             array_pop($naicsData);
+            if ($_GET['fromDate'] == '') $fromDate = '1900-01-01';
+            else $fromDate = $_GET['fromDate'];
+            if ($_GET['toDate'] == '') $toDate = '2099-01-01';
+            else $toDate = $_GET['toDate'];
 
 
 //            if(count($naicsData) > 0) {
@@ -41,6 +45,8 @@ class DataController extends Controller
                         }
                     }
                 })
+               ->where('response_deadline', '>', $fromDate . ' 00:00:00')
+               ->where('response_deadline', '<', $toDate . ' 23:59:59')
             ->Where(function ($query) use ($terms) {
                 foreach ($terms as $term) {
                     // Loop over the terms and do a search for each.
@@ -55,12 +61,12 @@ class DataController extends Controller
 //            })
             ->paginate(10);
 
-            $data->withPath('?search=' . $_GET['search'] . '&naics=' . $_GET['naics']);
+            $data->withPath('?search=' . $_GET['search'] . '&naics=' . $_GET['naics'] . '&fromDate=' . $_GET['fromDate'] . '&toDate=' . $_GET['toDate']);
 
             if(!isset($_GET['page'])) {
-                return view('data.result', ['data' => $data, 'search' => $_GET['search'], 'naics' => $_GET['naics']]);
+                return view('data.result', ['data' => $data, 'search' => $_GET['search'], 'naics' => $_GET['naics'], 'fromDate' => $_GET['fromDate'], 'toDate' => $_GET['toDate']]);
             } else {
-                return view('data.show', ['data' => $data, 'search' => $_GET['search'], 'naics' => $_GET['naics']]);
+                return view('data.show', ['data' => $data, 'search' => $_GET['search'], 'naics' => $_GET['naics'], 'fromDate' => $_GET['fromDate'], 'toDate' => $_GET['toDate']]);
             }
         }
     }

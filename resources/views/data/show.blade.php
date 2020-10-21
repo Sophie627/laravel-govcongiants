@@ -32,6 +32,21 @@
                                 <select class="form-control" multiple="multiple" id="naics" style="width: 24vw">
                                 </select>
                             </div>
+                            <div class="py-3">
+                                <p class="font-black">Response Date</p>
+                                <p class="font-semibold">From</p>
+                                @if(isset($fromDate))
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="fromDate" value="{{ $fromDate }}" onkeydown="return false">
+                                @else
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="fromDate" value="" onkeydown="return false">
+                                @endif
+                                <p class="font-semibold">To</p>
+                                @if(isset($todate))
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="toDate" value="{{ $toDate }}" onkeydown="return false">
+                                @else
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="toDate" value="" onkeydown="return false">
+                                @endif
+                            </div>
                             <a href="/data">Clear All</a>
                         </div>
                         <div class="md:col-span-2 sm:col-span-3" id="result">
@@ -84,11 +99,17 @@
         for(element of dropdown) {
             naics = naics + element.value + ',';
         }
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+        console.log(fromDate);
+
         $.ajax({
             type: 'GET',
             data: {
                 search: keywords,
                 naics: naics,
+                fromDate: fromDate,
+                toDate: toDate,
             },
             url: '/data',
             success: function(data) {
@@ -1888,8 +1909,13 @@
 
         $("#naics").on('change', function(e) {
             var dropdown = $('#naics').find(':selected');
-            console.log(dropdown.length);
             if(isloading) search();
+        });
+        $('#fromDate').on('change', function(e) {
+           if(isloading) search();
+        });
+        $('#toDate').on('change', function(e) {
+           if(isloading) search();
         });
 
         isloading = false;
