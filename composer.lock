@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b307c64f87dbbf736431bea6e6f6c47",
+    "content-hash": "dcc918ea8902ff0cbab3895e8cce7b97",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2945,6 +2945,53 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "shuchkin/simplexlsxgen",
+            "version": "0.9.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shuchkin/simplexlsxgen.git",
+                "reference": "0fc338d802153fa96abfa2ef8097130bab55a3e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shuchkin/simplexlsxgen/zipball/0fc338d802153fa96abfa2ef8097130bab55a3e0",
+                "reference": "0fc338d802153fa96abfa2ef8097130bab55a3e0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-zlib": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/SimpleXLSXGen.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Shuchkin (SMSPILOT)",
+                    "email": "sergey.shuchkin@gmail.com",
+                    "homepage": "https://shuchkin.ru/"
+                }
+            ],
+            "description": "Export data to Excel XLSx file. PHP XLSX generator.",
+            "homepage": "https://github.com/shuchkin/simplexlsxgen",
+            "keywords": [
+                "backend",
+                "creator",
+                "excel",
+                "generator",
+                "php",
+                "xlsx"
+            ],
+            "time": "2020-10-16T19:13:17+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -49,36 +49,45 @@
                             </div>
                             <a href="/data">Clear All</a>
                         </div>
-                        <div class="md:col-span-2 sm:col-span-3" id="result">
-                            {{ $data->links() }}
+                        <div class="md:col-span-2 sm:col-span-3">
 
-                            <div class="divide-y divide-gray-400">
-                                @foreach ($data as $element)
-                                    <div class="text-left py-2">
-                                    <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="{{ $element->link }}">{{ $element->title }}</a>
-                                        <p class="py-5">{{ $element->description }}</p>
-                                        <div class="pb-3">
-                                            <p class="font-bold">Notice ID</p>
-                                            <p>{{ $element->notice_id }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="font-bold">Department/Ind.Agency</p>
-                                            <p class="text-blue-700">{{ $element->department }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="font-bold">Sub-tier</p>
-                                            <p class="text-blue-700">{{ $element->sub_tier }}</p>
-                                        </div>
-                                        <div class="pb-3">
-                                            <p class="font-bold">Office</p>
-                                            <p>{{ $element->office }}</p>
-                                        </div>
-                                        <p><span class="font-bold">Current Response Date: </span>{{ $element->response_deadline }}</p>
-                                    </div>
-                                @endforeach
+                            <div class="py-5">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="download">
+                                    Download as XLSX File
+                                </button>
                             </div>
 
-                            {{ $data->links() }}
+                            <div id="result">
+                                {{ $data->links() }}
+
+                                <div class="divide-y divide-gray-400">
+                                    @foreach ($data as $element)
+                                        <div class="text-left py-2">
+                                        <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="{{ $element->link }}">{{ $element->title }}</a>
+                                            <p class="py-5">{{ $element->description }}</p>
+                                            <div class="pb-3">
+                                                <p class="font-bold">Notice ID</p>
+                                                <p>{{ $element->notice_id }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">Department/Ind.Agency</p>
+                                                <p class="text-blue-700">{{ $element->department }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">Sub-tier</p>
+                                                <p class="text-blue-700">{{ $element->sub_tier }}</p>
+                                            </div>
+                                            <div class="pb-3">
+                                                <p class="font-bold">Office</p>
+                                                <p>{{ $element->office }}</p>
+                                            </div>
+                                            <p><span class="font-bold">Current Response Date: </span>{{ $element->response_deadline }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                {{ $data->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,8 +98,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fileDownload/1.4.2/jquery.fileDownload.min.js"></script>
 <script src="{{ url('/js/jquery.dropdown.js') }}"></script>
 <script type="text/javascript">
+
+    $('#download').on('click', function (e) {
+        console.log('press download');
+        var dropdown = $('#naics').find(':selected');
+        keywords = $('#keywords').val();
+        var naics = '';
+        for(element of dropdown) {
+            naics = naics + element.value + ',';
+        }
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+
+        $.ajax({
+            type: 'GET',
+            data: {
+                search: keywords,
+                naics: naics,
+                fromDate: fromDate,
+                toDate: toDate,
+            },
+            url: '/download',
+            success: function(data) {
+                $.fileDownload('/' + data);
+            }
+        });
+    });
 
     function search() {
         var dropdown = $('#naics').find(':selected');
@@ -113,7 +149,6 @@
             },
             url: '/data',
             success: function(data) {
-                console.log("ok");
                 $('#result').html(data.toString());
             }
         });

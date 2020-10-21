@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/data', [DataController::class, 'index'])->name('data');
+    Route::get('/download', [DataController::class, 'downloadExcel']);
     // Route::get('/search', [SearchController::class, 'index']);
 });
 
