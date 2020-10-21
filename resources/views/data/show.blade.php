@@ -1900,6 +1900,8 @@
 
         $('#naics').val(naicsArr);
         $('#naics').trigger('change');
+        isloading = true;
+
 
         $('#keywords').tagsInput({
             'height': '120px',
