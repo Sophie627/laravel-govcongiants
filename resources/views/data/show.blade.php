@@ -92,6 +92,7 @@
             },
             url: '/data',
             success: function(data) {
+                console.log("ok");
                 $('#result').html(data.toString());
             }
         });
@@ -1883,10 +1884,15 @@
             theme: "classic",
         });
 
+        var isloading = true;
+
         $("#naics").on('change', function(e) {
-            search();
+            var dropdown = $('#naics').find(':selected');
+            console.log(dropdown.length);
+            if(isloading) search();
         });
 
+        isloading = false;
         var naicsData = $('#naics-data').text();
         var naicsArr = naicsData.split(",");
         naicsArr.pop();
