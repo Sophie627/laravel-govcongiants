@@ -147,7 +147,7 @@
                 fromDate: fromDate,
                 toDate: toDate,
             },
-            url: '/data',
+            url: '/',
             success: function(data) {
                 $('#result').html(data.toString());
             }

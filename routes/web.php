@@ -15,16 +15,16 @@ use App\Http\Controllers\SearchController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/data', [DataController::class, 'index'])->name('data');
+    Route::get('/', [DataController::class, 'index'])->name('data');
     Route::get('/download', [DataController::class, 'downloadExcel']);
     // Route::get('/search', [SearchController::class, 'index']);
 });
