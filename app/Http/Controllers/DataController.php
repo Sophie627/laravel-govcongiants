@@ -31,6 +31,8 @@ class DataController extends Controller
                         } else {
                             $query->orWhere('naics_code', $element);
                         }
+                        if (strlen($element) == 5) $element = $element . '0';
+                        $query->orWhere('naics_code', $element);
                     }
                 })
                ->where('response_deadline', '>', $fromDate . ' 00:00:00')
@@ -71,6 +73,8 @@ class DataController extends Controller
                     } else {
                         $query->orWhere('naics_code', $element);
                     }
+                    if (strlen($element) == 5) $element = $element . '0';
+                    $query->orWhere('naics_code', $element);
                 }
             })
             ->where('response_deadline', '>', $fromDate . ' 00:00:00')
