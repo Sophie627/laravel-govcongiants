@@ -1,6 +1,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<?php echo e(url('/css/jquery.dropdown.css')); ?>" />
+<style type="text/css">
+    .read-more-show{
+      cursor:pointer;
+      color: #ed8323;
+    }
+    .read-more-hide{
+      cursor:pointer;
+      color: #ed8323;
+    }
+
+    .hide_content{
+      display: none;
+    }
+</style>
 <?php if(isset($naics)): ?>
 <div id="naics-data" style="display: none"><?php echo e($naics); ?></div>
 <?php else: ?>
@@ -65,7 +79,18 @@
                                     <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $element): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="text-left py-2">
                                         <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="<?php echo e($element->link); ?>"><?php echo e($element->title); ?></a>
-                                            <p class="py-5"><?php echo e($element->description); ?></p>
+                                            <p>
+                                                <?php if(strlen(strip_tags($element->description)) > 500): ?>
+                                                    <?php echo e(substr(strip_tags($element->description), 0, 500)); ?>
+
+                                                    <span class="underline text-blue-500 read-more-show"> Read More</span>
+                                                    <span class="read-more-content hide_content"><?php echo e(substr(strip_tags($element->description), 50, strlen($element->description))); ?></span>
+                                                    <span class="underline text-blue-500 read-more-hide hide_content"> Read Less</span>
+                                                <?php else: ?>
+                                                    <?php echo e($element->description); ?>
+
+                                                <?php endif; ?>
+                                            </p>
                                             <div class="pb-3">
                                                 <p class="font-bold">Notice ID</p>
                                                 <p><?php echo e($element->notice_id); ?></p>
@@ -168,6 +193,24 @@
     }
 
     $(function() {
+        $('.read-more-content').addClass('hide_content')
+        $('.read-more-show').removeClass('hide_content')
+
+        // Set up the toggle effect:
+        $('.read-more-show').on('click', function(e) {
+            $(this).next().removeClass('hide_content');
+            $(this).next().next().removeClass('hide_content');
+            $(this).addClass('hide_content');
+            e.preventDefault();
+        });
+
+        // Changes contributed by @diego-rzg
+        $('.read-more-hide').on('click', function(e) {
+            $(this).prev().prev().removeClass('hide_content');
+            $(this).prev().addClass('hide_content');
+            $(this).addClass('hide_content');
+            e.preventDefault();
+        });
         var data = [[11111, 'Soybean Farming'],
 [11112, 'Oilseed (except Soybean) Farming'],
 [11113, 'Dry Pea and Bean Farming'],
@@ -1933,7 +1976,7 @@
 [926150,' Regulation, Licensing, and Inspection of Miscellaneous Commercial Sectors'],
 [927110,' Space Research and Technology'],
 [928110,' National Security'],
-[928120,' International Affairs'],]
+[928120,' International Affairs'],];
         jsonData = [];
         $.each(data, function(index, value) {
             jsonData.push({
