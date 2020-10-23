@@ -10,6 +10,8 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
+        <link rel="shortcut icon" href="<?php echo e(asset('img/favicon.png')); ?>">
+
         <!-- Styles -->
         <link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>">
 
@@ -24,15 +26,15 @@
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('navigation-dropdown')->html();
-} elseif ($_instance->childHasBeenRendered('Fq6LpJj')) {
-    $componentId = $_instance->getRenderedChildComponentId('Fq6LpJj');
-    $componentTag = $_instance->getRenderedChildComponentTagName('Fq6LpJj');
+} elseif ($_instance->childHasBeenRendered('S7cpqfF')) {
+    $componentId = $_instance->getRenderedChildComponentId('S7cpqfF');
+    $componentTag = $_instance->getRenderedChildComponentTagName('S7cpqfF');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('Fq6LpJj');
+    $_instance->preserveRenderedChild('S7cpqfF');
 } else {
     $response = \Livewire\Livewire::mount('navigation-dropdown');
     $html = $response->html();
-    $_instance->logRenderedChild('Fq6LpJj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('S7cpqfF', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

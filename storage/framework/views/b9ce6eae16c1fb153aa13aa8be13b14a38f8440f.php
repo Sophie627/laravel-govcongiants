@@ -13,6 +13,8 @@
         <!-- Styles -->
         <link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>">
 
+        <link rel="shortcut icon" href="<?php echo e(asset('img/favicon.png')); ?>">
+
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
     </head>

@@ -28,7 +28,7 @@
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header'); ?> 
         <h2 class="font-bold text-xl text-white leading-tight">
-            <?php echo e(__('Data')); ?>
+            <?php echo e(__('Sources Sought and Presolicitations')); ?>
 
         </h2>
      <?php $__env->endSlot(); ?>
@@ -115,7 +115,7 @@
                                 <?php echo e($data->links()); ?>
 
                             </div>
-                            <div class="py-5">
+                            <div class="py-5 text-center">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="download">
                                     Download as XLSX File
                                 </button>

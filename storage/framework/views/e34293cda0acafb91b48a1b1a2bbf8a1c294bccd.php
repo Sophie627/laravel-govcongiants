@@ -14,6 +14,18 @@
             <img src="<?php echo e(asset('img/logo-black.png')); ?>" alt="logo">
          <?php $__env->endSlot(); ?>
 
+        <div class="mb-4 text-sm text-gray-600">
+            <?php echo e(__('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.')); ?>
+
+        </div>
+
+        <?php if(session('status')): ?>
+            <div class="mb-4 font-medium text-sm text-green-600">
+                <?php echo e(session('status')); ?>
+
+            </div>
+        <?php endif; ?>
+
          <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.validation-errors','data' => ['class' => 'mb-4']]); ?>
 <?php $component->withName('jet-validation-errors'); ?>
@@ -27,17 +39,10 @@
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?> 
 
-        <?php if(session('status')): ?>
-            <div class="mb-4 font-medium text-sm text-green-600">
-                <?php echo e(session('status')); ?>
-
-            </div>
-        <?php endif; ?>
-
-        <form method="POST" action="<?php echo e(route('login')); ?>">
+        <form method="POST" action="<?php echo e(route('password.email')); ?>">
             <?php echo csrf_field(); ?>
 
-            <div>
+            <div class="block">
                  <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.label','data' => ['for' => 'email','value' => ''.e(__('Email')).'']]); ?>
 <?php $component->withName('jet-label'); ?>
@@ -64,55 +69,14 @@
 <?php endif; ?> 
             </div>
 
-            <div class="mt-4">
-                 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.label','data' => ['for' => 'password','value' => ''.e(__('Password')).'']]); ?>
-<?php $component->withName('jet-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php $component->withAttributes(['for' => 'password','value' => ''.e(__('Password')).'']); ?>
-<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
-<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
-<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?> 
-                 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.input','data' => ['id' => 'password','class' => 'block mt-1 w-full','type' => 'password','name' => 'password','required' => true,'autocomplete' => 'current-password']]); ?>
-<?php $component->withName('jet-input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php $component->withAttributes(['id' => 'password','class' => 'block mt-1 w-full','type' => 'password','name' => 'password','required' => true,'autocomplete' => 'current-password']); ?>
-<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
-<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
-<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?> 
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                    <span class="ml-2 text-sm text-gray-600"><?php echo e(__('Remember me')); ?></span>
-                </label>
-            </div>
-
             <div class="flex items-center justify-end mt-4">
-                <?php if(Route::has('password.request')): ?>
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="<?php echo e(route('password.request')); ?>">
-                        <?php echo e(__('Forgot your password?')); ?>
-
-                    </a>
-                <?php endif; ?>
-
                  <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.button','data' => ['class' => 'ml-4']]); ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'jetstream::components.button','data' => []]); ?>
 <?php $component->withName('jet-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php $component->withAttributes(['class' => 'ml-4']); ?>
-                    <?php echo e(__('Login')); ?>
+<?php $component->withAttributes([]); ?>
+                    <?php echo e(__('Email Password Reset Link')); ?>
 
                  <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
@@ -121,7 +85,6 @@
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?> 
             </div>
-
         </form>
      <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
@@ -135,4 +98,4 @@
 <?php endif; ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?> 
-<?php /**PATH D:\xampp\htdocs\laravel-govcongiants\resources\views/auth/login.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\xampp\htdocs\laravel-govcongiants\resources\views/auth/forgot-password.blade.php ENDPATH**/ ?>

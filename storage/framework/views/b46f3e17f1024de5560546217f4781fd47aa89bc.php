@@ -1,11 +1,22 @@
 <?php echo e($data->links()); ?>
 
-        
+
 <div class="divide-y divide-gray-400">
     <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $element): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="text-left py-2">
         <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="<?php echo e($element->link); ?>"><?php echo e($element->title); ?></a>
-            <p class="py-5"><?php echo e($element->description); ?></p>
+            <p class="py-5">
+                <?php if(strlen(strip_tags($element->description)) > 500): ?>
+                    <?php echo e(substr(strip_tags($element->description), 0, 500)); ?>
+
+                    <span class="underline text-blue-500 read-more-show"> Read More</span>
+                    <span class="read-more-content hide_content"><?php echo e(substr(strip_tags($element->description), 50, strlen($element->description))); ?></span>
+                    <span class="underline text-blue-500 read-more-hide hide_content"> Read Less</span>
+                <?php else: ?>
+                    <?php echo e($element->description); ?>
+
+                <?php endif; ?>
+            </p>
             <div class="pb-3">
                 <p class="font-bold">Notice ID</p>
                 <p><?php echo e($element->notice_id); ?></p>
