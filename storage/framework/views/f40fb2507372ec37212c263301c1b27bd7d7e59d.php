@@ -1,17 +1,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="{{ url('/css/jquery.dropdown.css') }}" />
-@if(isset($naics))
-<div id="naics-data" style="display: none">{{ $naics }}</div>
-@else
+<link rel="stylesheet" type="text/css" href="<?php echo e(url('/css/jquery.dropdown.css')); ?>" />
+<?php if(isset($naics)): ?>
+<div id="naics-data" style="display: none"><?php echo e($naics); ?></div>
+<?php else: ?>
 <div id="naics-data" style="display: none"></div>
-@endif
-<x-app-layout>
-    <x-slot name="header">
+<?php endif; ?>
+ <?php if (isset($component)) { $__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da = $component; } ?>
+<?php $component = $__env->getContainer()->make(App\View\Components\AppLayout::class, []); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes([]); ?>
+     <?php $__env->slot('header'); ?> 
         <h2 class="font-bold text-xl text-white leading-tight">
-            {{ __('Data') }}
+            <?php echo e(__('Data')); ?>
+
         </h2>
-    </x-slot>
+     <?php $__env->endSlot(); ?>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -21,11 +27,11 @@
                         <div class="md:col-span-1 sm:col-span-3 pr-8">
                             <div class="py-3">
                                 <p class="font-black">Keywords</p>
-                                @if(isset($search))
-                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords" value="{{ $search }}">
-                                @else
+                                <?php if(isset($search)): ?>
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords" value="<?php echo e($search); ?>">
+                                <?php else: ?>
                                 <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600 w-full" type="text" id="keywords" value="">
-                                @endif
+                                <?php endif; ?>
                             </div>
                             <div class="py-3">
                                 <p class="font-black">NAICS</p>
@@ -35,52 +41,54 @@
                             <div class="py-3">
                                 <p class="font-black">Response Date</p>
                                 <p class="font-semibold">From</p>
-                                @if(isset($fromDate))
-                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="fromDate" value="{{ $fromDate }}" onkeydown="return false">
-                                @else
+                                <?php if(isset($fromDate)): ?>
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="fromDate" value="<?php echo e($fromDate); ?>" onkeydown="return false">
+                                <?php else: ?>
                                 <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="fromDate" value="" onkeydown="return false">
-                                @endif
+                                <?php endif; ?>
                                 <p class="font-semibold">To</p>
-                                @if(isset($todate))
-                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="toDate" value="{{ $toDate }}" onkeydown="return false">
-                                @else
+                                <?php if(isset($todate)): ?>
+                                <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="toDate" value="<?php echo e($toDate); ?>" onkeydown="return false">
+                                <?php else: ?>
                                 <input class="resize-none border border-gray-900 focus:border-blue-600 text-gray-900 focus:text-blue-600" style="width: 24vw" type="date" id="toDate" value="" onkeydown="return false">
-                                @endif
+                                <?php endif; ?>
                             </div>
                             <a href="/data">Clear All</a>
                         </div>
                         <div class="md:col-span-2 sm:col-span-3">
 
                             <div id="result">
-                                {{ $data->links() }}
+                                <?php echo e($data->links()); ?>
+
 
                                 <div class="divide-y divide-gray-400">
-                                    @foreach ($data as $element)
+                                    <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $element): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="text-left py-2">
-                                        <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="{{ $element->link }}">{{ $element->title }}</a>
-                                            <p class="py-5">{{ $element->description }}</p>
+                                        <a class="text-blue-700 font-black text-2xl text-opacity-100 hover:text-orange-700" href="<?php echo e($element->link); ?>"><?php echo e($element->title); ?></a>
+                                            <p class="py-5"><?php echo e($element->description); ?></p>
                                             <div class="pb-3">
                                                 <p class="font-bold">Notice ID</p>
-                                                <p>{{ $element->notice_id }}</p>
+                                                <p><?php echo e($element->notice_id); ?></p>
                                             </div>
                                             <div>
                                                 <p class="font-bold">Department/Ind.Agency</p>
-                                                <p class="text-blue-700">{{ $element->department }}</p>
+                                                <p class="text-blue-700"><?php echo e($element->department); ?></p>
                                             </div>
                                             <div>
                                                 <p class="font-bold">Sub-tier</p>
-                                                <p class="text-blue-700">{{ $element->sub_tier }}</p>
+                                                <p class="text-blue-700"><?php echo e($element->sub_tier); ?></p>
                                             </div>
                                             <div class="pb-3">
                                                 <p class="font-bold">Office</p>
-                                                <p>{{ $element->office }}</p>
+                                                <p><?php echo e($element->office); ?></p>
                                             </div>
-                                            <p><span class="font-bold">Current Response Date: </span>{{ $element->response_deadline }}</p>
+                                            <p><span class="font-bold">Current Response Date: </span><?php echo e($element->response_deadline); ?></p>
                                         </div>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
 
-                                {{ $data->links() }}
+                                <?php echo e($data->links()); ?>
+
                             </div>
                             <div class="py-5">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="download">
@@ -93,12 +101,17 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+ <?php if (isset($__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da)): ?>
+<?php $component = $__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da; ?>
+<?php unset($__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da); ?>
+<?php endif; ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fileDownload/1.4.2/jquery.fileDownload.min.js"></script>
-<script src="{{ url('/js/jquery.dropdown.js') }}"></script>
+<script src="<?php echo e(url('/js/jquery.dropdown.js')); ?>"></script>
 <script type="text/javascript">
 
     $('#download').on('click', function (e) {
@@ -1983,3 +1996,4 @@
         });
     });
 </script>
+<?php /**PATH D:\xampp\htdocs\laravel-govcongiants\resources\views/data/show.blade.php ENDPATH**/ ?>
